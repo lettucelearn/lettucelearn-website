@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Call — Lettuce Learn</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #7AB800;
+      --dark: #0e1208;
+      --text: #d4dcc4;
+      --muted: #4a5a3a;
+    }
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--green);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px;
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--green);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    p {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 48px;
+    }
+    .cta {
+      display: inline-block;
+      background: var(--green);
+      color: #0e1208;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .cta:hover { opacity: 0.85; }
+    .note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    footer {
+      text-align: center;
+      padding: 32px;
+      font-size: 12px;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="nav-logo">Lettuce · Learn</a>
+    <ul class="nav-links">
+      <li><a href="/sat-act.html">SAT & ACT</a></li>
+      <li><a href="/math-comp.html">Math Competition</a></li>
+      <li><a href="/exec-func.html">Executive Functioning</a></li>
+      <li><a href="/results.html">Results</a></li>
+      <li><a href="/about.html">About</a></li>
+    </ul>
+  </nav>
+  <main>
+    <div class="eyebrow">Book a Preliminary Call</div>
+    <h1>Online booking<br>is on its way.</h1>
+    <p>In the meantime, reach out directly and we'll get a 30-minute call scheduled. No commitment. No pitch.</p>
+    <a href="mailto:admin@lettucestudy.com" class="cta">Email Us to Schedule</a>
+    <div class="note">Virtual · 30 minutes · No obligation</div>
+  </main>
+  <footer>© 2026 Lettuce Learn · Redmond, WA</footer>
+</body>
+</html>
