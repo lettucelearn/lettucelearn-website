@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Lettuce Learn</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Montserrat', sans-serif; background: #181E0E; color: #E8EDE0; overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 56px; height:72px;
+  background:rgba(24,30,14,0.92); backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(122,184,0,0.06);
+}
+.nav-links { display:flex; align-items:center; gap:36px; list-style:none; }
+.nav-links a { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#4a5a3a; text-decoration:none; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:#E8EDE0; }
+.nav-cta { color:#181E0E !important; background:#7AB800; padding:10px 20px; border-radius:3px; }
+.nav-cta:hover { opacity:0.85; color:#181E0E !important; }
+
+/* SECTIONS */
+.section-inner { max-width:1080px; margin:0 auto; }
+.section-tag { font-size:9px; letter-spacing:4px; color:#7AB800; font-weight:700; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:12px; }
+.section-tag::before { content:''; display:block; width:20px; height:1px; background:#7AB800; }
+.section-headline { font-size:clamp(28px,3.5vw,46px); font-weight:900; color:#E8EDE0; line-height:1.1; letter-spacing:-1.5px; margin-bottom:24px; }
+.section-headline em { font-style:normal; color:#7AB800; }
+.section-body { font-size:15px; font-family:'Lora',serif; line-height:1.85; color:#5a6e3a; }
+.section-body strong { color:#E8EDE0; font-family:'Montserrat',sans-serif; font-size:0.9em; font-weight:700; font-style:normal; }
+
+.section-light { background:#F5F5F0; padding:120px 56px; }
+.section-light .section-headline { color:#2C2C2C; }
+.section-light .section-body { color:#888; }
+.section-light .section-body strong { color:#2C2C2C; }
+.section-light .section-tag { color:#7AB800; }
+.section-light .section-tag::before { background:#7AB800; }
+
+.section-dark { background:#181E0E; padding:120px 56px; }
+
+/* HERO */
+.about-hero {
+  background: #181E0E;
+  display:flex; align-items:flex-start;
+  padding:160px 56px 100px;
+  position:relative;
+  overflow:hidden;
+}
+.about-hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 60% 60% at 80% 40%, rgba(122,184,0,0.055) 0%, transparent 70%);
+}
+.hero-eyeline {
+  font-size:9px; letter-spacing:4px; color:#7AB800; font-weight:700; text-transform:uppercase;
+  display:flex; align-items:center; gap:12px; margin-bottom:28px;
+}
+.hero-eyeline::before { content:''; display:block; width:20px; height:1px; background:#7AB800; }
+.about-hero h1 {
+  font-size:clamp(36px,5vw,68px); font-weight:900; color:#E8EDE0;
+  line-height:1.06; letter-spacing:-2.5px; margin-bottom:28px;
+  max-width:900px;
+}
+.about-hero h1 em { font-style:normal; color:#7AB800; }
+.about-hero-sub {
+  font-size:15px; font-family:'Lora',serif; font-style:italic; color:#5a6e3a;
+  line-height:1.8; max-width:560px;
+}
+
+/* STORY SECTION */
+.story-section { background:#0d1108; padding:120px 56px; }
+.story-inner { max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:start; }
+.story-headline { font-size:clamp(26px,3vw,40px); font-weight:900; color:#E8EDE0; line-height:1.1; letter-spacing:-1.5px; margin-bottom:36px; }
+.story-headline em { font-style:normal; color:#7AB800; }
+.story-body { font-size:15px; font-family:'Lora',serif; line-height:1.9; color:#7a9e52; }
+.story-body p { margin-bottom:22px; }
+.story-body p:last-child { margin-bottom:0; }
+.story-body strong { color:#E8EDE0; font-family:'Montserrat',sans-serif; font-size:0.9em; font-weight:700; font-style:normal; }
+.story-stat {
+  display:flex; flex-direction:column; gap:4px; margin-bottom:40px;
+}
+.story-stat-number { font-size:80px; font-weight:900; color:rgba(122,184,0,0.14); line-height:1; letter-spacing:-5px; }
+.story-stat-label { font-size:9px; letter-spacing:3px; color:#7AB800; font-weight:700; text-transform:uppercase; margin-top:-6px; }
+
+/* BIO SECTION */
+.bio-section { background:#181E0E; padding:120px 56px; }
+.bio-inner { max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 340px; gap:80px; align-items:start; }
+.bio-body { font-size:15px; font-family:'Lora',serif; line-height:1.9; color:#5a6e3a; }
+.bio-body p { margin-bottom:22px; }
+.bio-body p:last-child { margin-bottom:0; }
+.bio-body strong { color:#E8EDE0; font-family:'Montserrat',sans-serif; font-size:0.9em; font-weight:700; font-style:normal; }
+.bio-credentials { display:flex; flex-direction:column; gap:14px; margin-top:36px; }
+.bio-cred { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#4a5a3a; padding:14px 0; border-bottom:1px solid rgba(122,184,0,0.08); line-height:1.6; }
+.bio-cred span { color:#E8EDE0; display:block; }
+.bio-photo-wrap { position:relative; }
+.bio-photo { width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:4px; background:#161c0a; border:1px solid rgba(122,184,0,0.06); }
+.bio-photo img { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; }
+.bio-photo-label { margin-top:20px; }
+.bio-name { font-size:15px; font-weight:800; color:#E8EDE0; margin-bottom:4px; }
+.bio-title { font-size:10px; letter-spacing:2px; color:#7AB800; font-weight:700; text-transform:uppercase; }
+
+/* QUOTE SECTION */
+.quote-section { background:#F5F5F0; padding:120px 56px; }
+.quote-inner { max-width:1080px; margin:0 auto; }
+.quote-layout { display:grid; grid-template-columns:1fr 480px; gap:80px; align-items:start; }
+.quote-left { display:flex; flex-direction:column; }
+.quote-right { display:flex; flex-direction:column; gap:0; }
+.quote-section .section-tag { color:#7AB800; }
+.quote-section .section-tag::before { background:#7AB800; }
+.founder-quote { position:relative; padding:56px 64px; background:#fff; border-radius:16px; border:1px solid rgba(122,184,0,0.15); box-shadow:0 4px 32px rgba(0,0,0,0.06); }
+.founder-quote::before { content:'"'; position:absolute; top:-20px; left:48px; font-size:120px; font-family:'Lora',serif; color:rgba(122,184,0,0.18); line-height:1; }
+.quote-text { font-size:16px; font-family:'Lora',serif; font-style:italic; line-height:1.85; color:#666; margin-bottom:28px; }
+.quote-text em { font-style:normal; color:#2C2C2C; font-weight:600; }
+.quote-attribution { font-size:10px; letter-spacing:2px; color:#aaa; font-weight:700; text-transform:uppercase; }
+.quote-attribution span { color:#7AB800; }
+.brand-promise { margin-top:80px; padding-top:64px; border-top:1px solid rgba(0,0,0,0.08); text-align:center; }
+.brand-promise-body { font-size:18px; font-family:'Lora',serif; font-style:italic; line-height:2; color:#888; }
+.brand-promise-body p { margin-bottom:0; }
+.brand-promise-body strong { color:#2C2C2C; font-style:normal; font-family:'Lora',serif; font-weight:600; }
+.quote-photo-wrap { position:relative; }
+.quote-photo { width:100%; aspect-ratio:4/3; border-radius:4px; overflow:hidden; background:#e0e0d8; border:1px solid rgba(0,0,0,0.06); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; }
+.quote-photo-label { margin-top:14px; font-size:9px; letter-spacing:2px; color:#aaa; font-weight:700; text-transform:uppercase; line-height:1.7; }
+
+/* CTA */
+.cta-section { background:#181E0E; padding:140px 56px; text-align:center; border-top:1px solid rgba(122,184,0,0.06); }
+.cta-headline { font-size:clamp(28px,3.5vw,48px); font-weight:900; color:#E8EDE0; letter-spacing:-2px; line-height:1.1; margin-bottom:16px; }
+.cta-sub { font-size:13px; font-family:'Lora',serif; font-style:italic; color:#5a6e3a; margin-bottom:44px; }
+.btn-primary { background:#E8EDE0; color:#181E0E; font-family:'Montserrat',sans-serif; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; padding:18px 36px; border:none; border-radius:3px; cursor:pointer; transition:background 0.2s; }
+.btn-primary:hover { background:#7AB800; }
+.cta-note { margin-top:16px; font-size:10px; color:#4a5a3a; font-weight:600; letter-spacing:1px; }
+
+/* FOOTER */
+footer { background:#0d1108; padding:36px 56px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid rgba(122,184,0,0.06); }
+.footer-copy { font-size:9px; color:#3a4a2a; font-weight:600; letter-spacing:1px; }
+.footer-links { display:flex; gap:28px; list-style:none; }
+.footer-links a { font-size:9px; color:#3a4a2a; text-decoration:none; font-weight:600; letter-spacing:1px; text-transform:uppercase; transition:color 0.2s; }
+.footer-links a:hover { color:#7a9a5a; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+.progress-bar { position:fixed; top:0; left:0; height:2px; background:#7AB800; z-index:200; width:0%; transition:width 0.1s linear; }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+
+<nav>
+  <a href="index.html"><img src="data:image/png;base64,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"  alt="Lettuce Learn" style="height:30px;width:auto;"></a>
+  <ul class="nav-links">
+    <li><a href="sat-act.html">SAT &amp; ACT</a></li>
+    <li><a href="math-comp.html">Math Competition</a></li>
+    <li><a href="exec-func.html">Executive Functioning</a></li>
+    <li><a href="index.html#results">Results</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="contact.html" class="nav-cta">Book a Call</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div style="position:relative;z-index:2;max-width:900px;">
+    <div class="hero-eyeline" style="animation:fadeUp 0.8s ease forwards 0.2s;opacity:0;">Our Story</div>
+    <h1 style="animation:fadeUp 0.8s ease forwards 0.35s;opacity:0;">
+      The <em>22 days</em> that changed everything.
+    </h1>
+    <p class="about-hero-sub" style="animation:fadeUp 0.8s ease forwards 0.5s;opacity:0;">
+      A challenge accepted in a packed lecture hall in South Korea. The proof followed in 22 days. The method has never stopped evolving since.
+    </p>
+  </div>
+</section>
+
+<!-- THE 22-DAY STORY -->
+<section class="story-section">
+  <div class="story-inner">
+    <div>
+      <div class="section-tag">The Story</div>
+
+      <!-- Three stat blocks -->
+      <div class="story-stat">
+        <div class="story-stat-number">22</div>
+        <div class="story-stat-label">Days</div>
+      </div>
+      <div class="story-stat">
+        <div class="story-stat-number">3</div>
+        <div class="story-stat-label">Exams · GRE · GMAT · LSAT</div>
+      </div>
+      <div class="story-stat">
+        <div class="story-stat-number" style="font-size:80px;letter-spacing:-6px;">99th</div>
+        <div class="story-stat-label">Percentile · Each Exam</div>
+      </div>
+    </div>
+    <div class="story-body">
+      <p>In 2015, Jay was invited to speak at a test preparation seminar in South Korea — a lecture hall full of parents and educators obsessed with finding that magical something to give their student the slightest advantage.</p>
+      <p>Jay's whole talk was about how the SAT is not so much a test, but a game with academic rules. His argument was that <strong>the SAT is a simple game that is easy to master, so long as you understand the rules.</strong></p>
+      <p>After the session, a group of parents pushed back. They'd heard claims like his before. They wanted proof.</p>
+      <p>The challenge was simple: take three graduate school-level tests — GRE, GMAT, and LSAT — within the next month and post his scores. Three tests that he had never prepared for before, taken cold, while working full-time.</p>
+      <p>Jay accepted.</p>
+      <p>He didn't study in the conventional sense. He didn't have the time for it. Instead, he did what he always does — he learned the test. He mapped its structure, identified the patterns, and figured out the signals from the noise.</p>
+      <p>It took him 22 days to take all three exams. And in all three he placed within the 99th percentile.</p>
+      <p>The room that had challenged him added roughly 25 students the following week. College Board heard about it and hired him to "break" their newly formatted SAT.</p>
+      <p>Jay doesn't tell this story to impress. He tells it because it's the clearest demonstration of what the method actually is — not a curriculum, not a formula, but a transferable way of <strong>reading a situation clearly</strong> and <strong>making high-probability decisions under pressure.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY LETTUCE LEARN -->
+<section class="quote-section">
+  <div class="quote-inner">
+    <div class="section-tag" style="margin-bottom:48px;">Why "Lettuce Learn"</div>
+    <div class="quote-layout">
+      <div class="quote-left">
+        <div class="founder-quote">
+          <p class="quote-text">To me, it didn't make any sense to teach a standardized method to a student who is struggling with standardized testing. It seemed like putting the responsibility on the student — who is already struggling enough.<br><br>Our name 'Lettuce Learn' is our vow to confidently take on the role of first learning how the student approaches the test. Once we truly see how the student sees the test, we then work together on building a personalized system built upon our method. So, our name literally offers, <em>'hey, let us learn YOU, before you learn anything.'</em></p>
+          <div class="quote-attribution">— <span>Jay Khang</span>, Founder &amp; Chief Strategist</div>
+        </div>
+      </div>
+      <div class="quote-right">
+        <div class="quote-photo-wrap">
+          <div class="quote-photo">
+            <!-- Replace with photo: Jay standing, leaning in from right; student seated on left -->
+            <div style="width:48px;height:48px;border-radius:50%;background:rgba(122,184,0,0.15);display:flex;align-items:center;justify-content:center;">
+              <div style="width:20px;height:20px;border-radius:50%;background:rgba(122,184,0,0.25);"></div>
+            </div>
+            <div style="font-size:9px;letter-spacing:2px;color:#bbb;font-weight:700;text-transform:uppercase;">Photo Coming</div>
+          </div>
+          <div class="quote-photo-label">Jay &amp; Student · One-on-One Session</div>
+        </div>
+      </div>
+    </div>
+    <div class="brand-promise">
+      <div class="brand-promise-body">
+        <p>The teacher learns the student first. Everything else follows.</p>
+        <p><strong>So, Lettuce Learn.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div style="max-width:640px;margin:0 auto;">
+    <div class="section-tag" style="justify-content:center;margin-bottom:32px;">Work With Us</div>
+    <h2 class="cta-headline">A 30-minute call.<br>No commitment.</h2>
+    <p class="cta-sub">We start by learning how your student thinks. Everything else follows from there.</p>
+    <button class="btn-primary">Book a Preliminary Call</button>
+    <p class="cta-note">Redmond, WA · lettucestudy.com</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2025 Lettuce Learn · Redmond, WA</span>
+  <ul class="footer-links">
+    <li><a href="sat-act.html">SAT &amp; ACT</a></li>
+    <li><a href="math-comp.html">Math Competition</a></li>
+    <li><a href="exec-func.html">Executive Functioning</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.body.scrollHeight - window.innerHeight;
+    document.getElementById('progressBar').style.width = (scrolled / total * 100) + '%';
+  });
+</script>
+</body>
+</html>

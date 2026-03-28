@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Results — Lettuce Learn</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green:   #7AB800;
+    --red:     #8B1A1A;
+    --olive:   #5C6B2E;
+    --dark:    #181E0E;
+    --charcoal:#2C2C2C;
+    --warm:    #F5F5F0;
+    --mid:     #888888;
+    --light:   #E8E8E3;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--dark);
+    color: var(--warm);
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right { opacity: 0; transform: translateX(32px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+  .delay-1 { transition-delay: 0.1s; }
+  .delay-2 { transition-delay: 0.2s; }
+  .delay-3 { transition-delay: 0.35s; }
+  .delay-4 { transition-delay: 0.5s; }
+  .delay-5 { transition-delay: 0.65s; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 56px; height: 64px;
+    background: rgba(20,20,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .nav-logo { display: flex; align-items: baseline; }
+  .nav-logo .l { font-size: 13px; font-weight: 900; letter-spacing: 2.5px; text-transform: uppercase; }
+  .nav-logo .l1 { color: var(--green); }
+  .nav-logo .sep { color: var(--olive); margin: 0 3px; }
+  .nav-logo .l2 { color: #c04040; }
+  .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; }
+  .nav-links a { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7a8f5a; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: #E8EDE0; }
+  .nav-cta { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--dark) !important; background: var(--green); padding: 10px 20px; border-radius: 3px; transition: opacity 0.2s !important; }
+  .nav-cta:hover { opacity: 0.85; color: var(--dark) !important; }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    padding: 140px 56px 80px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .page-eyebrow {
+    font-size: 9px; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--green);
+    margin-bottom: 24px;
+  }
+  .page-headline {
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    color: var(--warm);
+    max-width: 700px;
+  }
+  .page-headline em { color: var(--green); font-style: normal; }
+  .page-sub {
+    margin-top: 24px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: #6a7a5a;
+    line-height: 1.65;
+    max-width: 520px;
+  }
+
+  /* ── STAT STRIP ── */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .stat-block {
+    padding: 48px 40px;
+    border-right: 1px solid rgba(255,255,255,0.04);
+    position: relative;
+  }
+  .stat-block:last-child { border-right: none; }
+  .stat-num {
+    font-size: clamp(44px, 5vw, 64px);
+    font-weight: 900;
+    color: var(--green);
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #5a6a4a;
+    line-height: 1.5;
+  }
+  .stat-note {
+    margin-top: 10px;
+    font-size: 10px;
+    color: #3a4a2a;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── SECTION SHARED ── */
+  .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 56px; }
+  .section-eyebrow {
+    font-size: 9px; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--green);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(122,184,0,0.15); }
+  .section-headline { font-size: 28px; font-weight: 900; letter-spacing: -0.5px; color: var(--warm); }
+  .section-headline em { color: var(--green); font-style: normal; }
+
+  /* ── SCORE LADDER VIZ ── */
+  .score-ladder-section { padding: 100px 0; }
+  .score-ladder-wrap { margin-top: 60px; }
+
+  .ladder-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 72px;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .ladder-name {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #6a7a5a;
+    text-align: right;
+    padding-right: 20px;
+  }
+  .ladder-track {
+    height: 32px;
+    position: relative;
+    background: rgba(255,255,255,0.02);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .ladder-bar-bg {
+    position: absolute;
+    top: 0; bottom: 0;
+    background: rgba(122,184,0,0.07);
+    border-radius: 4px;
+  }
+  .ladder-bar-gain {
+    position: absolute;
+    top: 0; bottom: 0;
+    background: linear-gradient(90deg, rgba(122,184,0,0.25), rgba(122,184,0,0.55));
+    border-radius: 0 4px 4px 0;
+    transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 8px;
+  }
+  .ladder-bar-gain.anim { width: 0 !important; }
+  .ladder-score-end {
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--green);
+    letter-spacing: 0.5px;
+    text-align: right;
+    padding-left: 14px;
+  }
+  .ladder-gain-pill {
+    position: absolute;
+    left: calc(var(--start-pct));
+    top: 50%; transform: translateY(-50%);
+    font-size: 8px;
+    font-weight: 800;
+    color: rgba(122,184,0,0.6);
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .ladder-start-dot {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #3a4a2a;
+  }
+  .ladder-scale {
+    display: grid;
+    grid-template-columns: 110px 1fr 72px;
+    gap: 0;
+    margin-bottom: 8px;
+  }
+  .ladder-scale-track {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    margin-bottom: 16px;
+  }
+  .ladder-scale-label {
+    font-size: 8px;
+    font-weight: 700;
+    color: #3a4a2a;
+    letter-spacing: 1px;
+  }
+  /* neurodiverse flag */
+  .nd-flag {
+    display: inline-block;
+    font-size: 7px; font-weight: 800; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #5a7a9a;
+    border: 1px solid rgba(90,122,154,0.3);
+    border-radius: 2px;
+    padding: 1px 4px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .fg-flag {
+    display: inline-block;
+    font-size: 7px; font-weight: 800; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #9a7a5a;
+    border: 1px solid rgba(154,122,90,0.3);
+    border-radius: 2px;
+    padding: 1px 4px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  /* ── JOURNEY SECTION ── */
+  .journey-section { padding: 100px 0; border-top: 1px solid rgba(255,255,255,0.04); }
+  .journey-grid { margin-top: 60px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  .journey-card {
+    background: #1e2412;
+    border-radius: 16px;
+    padding: 32px;
+    border: 1px solid rgba(122,184,0,0.06);
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
+    position: relative;
+  }
+  .journey-card:hover { border-color: rgba(122,184,0,0.2); transform: translateY(-4px); }
+  .journey-tag { font-size: 8px; letter-spacing: 3px; color: var(--green); font-weight: 700; text-transform: uppercase; margin-bottom: 16px; }
+  .journey-name { font-size: 18px; font-weight: 800; color: var(--warm); margin-bottom: 4px; }
+  .journey-sub { font-size: 10px; color: #6a7a5a; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 28px; }
+  .journey-score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .j-score-from { font-size: 22px; font-weight: 900; color: #555; }
+  .j-score-arrow { font-size: 14px; color: #444; }
+  .j-score-to { font-size: 28px; font-weight: 900; color: var(--green); }
+
+  /* Journey timeline inside card */
+  .journey-milestones { margin-top: 24px; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 20px; }
+  .milestone-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .milestone-dot { width: 8px; height: 8px; border-radius: 50%; background: #3a4a2a; flex-shrink: 0; margin-top: 4px; transition: background 0.3s; }
+  .milestone-dot.final { background: var(--green); }
+  .milestone-line-wrap { position: relative; display: flex; flex-direction: column; }
+  .milestone-date { font-size: 8px; font-weight: 700; letter-spacing: 1.5px; color: #4a5a3a; text-transform: uppercase; }
+  .milestone-score-line { display: flex; align-items: baseline; gap: 6px; }
+  .milestone-score { font-size: 15px; font-weight: 900; color: var(--warm); }
+  .milestone-pct { font-size: 8px; font-weight: 700; color: #6a7a5a; letter-spacing: 1px; }
+  .milestone-sessions { font-size: 9px; color: #3a4a2a; font-weight: 600; margin-top: 1px; }
+
+  /* vertical connector */
+  .milestone-connector { width: 1px; height: 12px; background: rgba(122,184,0,0.1); margin-left: 3px; }
+
+  .journey-quote {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: #555;
+    line-height: 1.65;
+    position: relative;
+  }
+  .journey-quote .qmark { font-size: 48px; line-height: 1; color: var(--green); opacity: 0.15; position: absolute; top: 10px; left: -4px; font-family: Georgia, serif; pointer-events: none; }
+  .journey-quote p { padding-left: 20px; }
+  .journey-quote .emph { font-style: normal; font-family: 'Montserrat', sans-serif; font-size: 0.88em; color: var(--green); font-weight: 700; }
+
+  .journey-cta { margin-top: 24px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #4a5a3a; transition: color 0.2s; }
+  .journey-card:hover .journey-cta { color: var(--green); }
+
+  /* ── EFFICIENCY SECTION ── */
+  .efficiency-section { padding: 100px 0; border-top: 1px solid rgba(255,255,255,0.04); }
+  .efficiency-layout { margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .efficiency-prose {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #7a8a6a;
+  }
+  .efficiency-prose strong { font-family: 'Montserrat', sans-serif; color: var(--warm); font-size: 0.9em; }
+
+  /* Scatter plot canvas */
+  .scatter-wrap {
+    background: #1a2010;
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid rgba(122,184,0,0.06);
+  }
+  .scatter-title {
+    font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: #5a6a4a; margin-bottom: 20px;
+  }
+  #scatterCanvas { width: 100%; display: block; }
+
+  /* ── PROJECTION SECTION ── */
+  .projection-section { padding: 100px 0; border-top: 1px solid rgba(255,255,255,0.04); }
+  .projection-layout { margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+
+  /* Donut chart */
+  .donut-wrap { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+  #donutCanvas { max-width: 220px; }
+  .donut-legend { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+  .legend-item { display: flex; align-items: center; gap: 10px; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; color: #7a8a6a; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Profile tags */
+  .profile-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  .profile-tag {
+    padding: 8px 16px;
+    border-radius: 40px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+  .profile-tag.nd { color: #5a8aaa; border-color: rgba(90,138,170,0.3); background: rgba(90,138,170,0.06); }
+  .profile-tag.fg { color: #aa8a5a; border-color: rgba(170,138,90,0.3); background: rgba(170,138,90,0.06); }
+  .profile-tag.std { color: #7a9a6a; border-color: rgba(122,154,106,0.3); background: rgba(122,154,106,0.06); }
+
+  .projection-right-prose {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #7a8a6a;
+  }
+  .projection-right-prose strong { font-family: 'Montserrat', sans-serif; color: var(--warm); font-size: 0.9em; }
+
+  /* ── QUOTE RIBBON ── */
+  .quote-ribbon {
+    padding: 80px 0;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    overflow: hidden;
+  }
+  .quote-ribbon-track { display: flex; gap: 40px; animation: ribbon-scroll 40s linear infinite; width: max-content; }
+  @keyframes ribbon-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ribbon-quote {
+    flex-shrink: 0;
+    max-width: 360px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #555;
+    padding: 28px 32px;
+    background: #1a2010;
+    border-radius: 12px;
+    border: 1px solid rgba(122,184,0,0.05);
+    position: relative;
+  }
+  .ribbon-quote .emph { font-style: normal; font-family: 'Montserrat', sans-serif; font-size: 0.9em; color: var(--green); font-weight: 700; }
+  .ribbon-attr { margin-top: 12px; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #3a4a2a; font-style: normal; }
+
+  /* ── CTA ── */
+  .cta-section { padding: 120px 56px; text-align: center; }
+  .cta-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--green); margin-bottom: 28px; }
+  .cta-headline { font-size: clamp(32px, 4vw, 52px); font-weight: 900; letter-spacing: -1px; line-height: 1.1; color: var(--warm); margin-bottom: 24px; }
+  .cta-headline em { color: var(--green); font-style: normal; }
+  .cta-body { font-family: 'Lora', serif; font-style: italic; font-size: 16px; color: #6a7a5a; line-height: 1.65; max-width: 480px; margin: 0 auto 40px; }
+  .cta-btn { background: var(--green); color: var(--dark); font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 18px 40px; border: none; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }
+  .cta-btn:hover { opacity: 0.85; }
+  .cta-note { margin-top: 16px; font-size: 9px; color: #4a5a3a; font-weight: 600; letter-spacing: 1.5px; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 48px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-logo .l { font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+  .footer-logo .l1 { color: var(--green); }
+  .footer-logo .sep { color: var(--olive); margin: 0 3px; }
+  .footer-logo .l2 { color: #c04040; }
+  .footer-copy { font-size: 9px; color: #3a4a2a; font-weight: 600; letter-spacing: 1.5px; }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #4a5a3a; text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--warm); }
+
+  /* ── COUNTER ANIMATION ── */
+  .counter { display: inline-block; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="l l1">Lettuce</span>
+    <span class="l sep">·</span>
+    <span class="l l2">Learn</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">SAT / ACT</a></li>
+    <li><a href="#">Math Competition</a></li>
+    <li><a href="#">Exec. Functioning</a></li>
+    <li><a href="#" class="active">Results</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#" class="nav-cta">Book a Call</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <div class="section-inner">
+    <div class="page-eyebrow reveal">Every student. Every score.</div>
+    <h1 class="page-headline reveal delay-1">The numbers are <em>unfiltered.</em></h1>
+    <p class="page-sub reveal delay-2">
+      Every official test result from every student who has completed a program. No cherrypicking. No projections passed off as scores.
+    </p>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="stat-block reveal">
+    <div class="stat-num">+<span class="counter" data-target="313">0</span></div>
+    <div class="stat-label">Average SAT<br>Point Gain</div>
+    <div class="stat-note">Across all 12 students</div>
+  </div>
+  <div class="stat-block reveal delay-1">
+    <div class="stat-num"><span class="counter" data-target="92">0</span>%</div>
+    <div class="stat-label">Projections<br>Met or Exceeded</div>
+    <div class="stat-note">11 of 12 students</div>
+  </div>
+  <div class="stat-block reveal delay-2">
+    <div class="stat-num">~<span class="counter" data-target="12">0</span></div>
+    <div class="stat-label">SAT Points Gained<br>Per Session Hour</div>
+    <div class="stat-note">Average efficiency rate</div>
+  </div>
+  <div class="stat-block reveal delay-3">
+    <div class="stat-num"><span class="counter" data-target="28">0</span><span style="font-size:32px">h</span></div>
+    <div class="stat-label">Average Total<br>Session Hours</div>
+    <div class="stat-note">To final official score</div>
+  </div>
+</div>
+
+<!-- SCORE LADDER -->
+<section class="score-ladder-section">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal">Start to Finish</div>
+    <h2 class="section-headline reveal delay-1">Every student's <em>full arc.</em></h2>
+
+    <div class="score-ladder-wrap reveal delay-2">
+
+      <!-- Scale header -->
+      <div class="ladder-scale">
+        <div></div>
+        <div>
+          <div class="ladder-scale-track" id="ladder-scale-track">
+            <span class="ladder-scale-label">1000</span>
+            <span class="ladder-scale-label">1100</span>
+            <span class="ladder-scale-label">1200</span>
+            <span class="ladder-scale-label">1300</span>
+            <span class="ladder-scale-label">1400</span>
+            <span class="ladder-scale-label">1500</span>
+            <span class="ladder-scale-label">1600</span>
+          </div>
+        </div>
+        <div></div>
+      </div>
+
+      <!-- Student rows, sorted by gain descending -->
+      <!-- Lyn: 1030→1490, +460 -->
+      <div class="ladder-row">
+        <div class="ladder-name">Lyn</div>
+        <div class="ladder-track">
+          <div class="ladder-bar-bg" style="left:calc((1030 - 950) / 700 * 100%); right:0;"></div>
+          <div class="ladder-bar-gain ladder-anim"
+               data-start="1030" data-end="1490"
+               style="left:calc((1030 - 950) / 700 * 100%); width:calc((1490 - 1030) / 700 * 100%);">
+          </div>
+          <div class="ladder-start-dot" style="left:calc((1030 - 950) / 700 * 100%);"></div>
+        </div>
+        <div class="ladder-score-end">1490</div>
+      </div>
+
+      <!-- Tanmay: 1130→1580, +450 -->
+      <div class="ladder-row">
+        <div class="ladder-name">Tanmay</div>
+        <div class="ladder-track">
+          <div class="ladder-bar-bg" style="left:calc((1130 - 950) / 700 * 100%); right:0;"></div>
+          <div class="ladder-bar-gain ladder-anim"
+               data-start="1130" data-end="1580"
+               style="left:calc((1130 - 950) / 700 * 100%); width:calc((1580 - 1130) / 700 * 100%);">
+          </div>
+          <div class="ladder-start-dot" style="left:calc((1130 - 950) / 700 * 100%);"></div>
+        </div>
+        <div class="ladder-score-end">1580</div>
+      </div>
+
+      <!-- Sachin: 1100→1520, +420 -->
+      <div class="ladder-row">
+        <div class="ladder-name">Sachin</div>
+        <div class="ladder-track">
+          <div class="ladder-bar-bg" style="left:calc((1100 - 950) / 700 * 100%); right:0;"></div>
+          <div class="ladder-bar-gain ladder-anim"
+               data-start="1100" data-end="1520"
+               style="left:calc((1100 - 950) / 700 * 100%); width:calc((1520 - 1100) / 700 * 100%);">
+          </div>
+          <div class="ladder-start-dot" style="left:calc((1100 - 950) / 700 * 100%);"></div>
+        </div>
+        <div class="ladder-score-end">1520</div>
+      </div>
+
+      <!-- Devon: 1070→1460, +390 ND -->
+      <div class="ladder-row">
+        <div class="ladder-name">Devon <span class="nd-flag">ND</span></div>
+        <div class="ladder-track">
+          <div class="ladder-bar-bg" style="left:calc((1070 - 950) / 700 * 100%); right:0;"></div>
+          <div class="ladder-bar-gain ladder-anim"
+               data-start="1070" data-end="1460"
+               style="left:calc((1070 - 950) / 700 * 100%); width:calc((1460 - 1070) / 700 * 100%);">
+          </div>
+          <div class="ladder-start-dot" style="left:calc((1070 - 950) / 700 * 100%);"></div>
+        </div>
+        <div class="ladder-score-end">1460</div>
+      </div>
+
+      <!-- Rae: 1180→1540, +360 -->
+      <div class="ladder-row">
+        <div class="ladder-name">Rae</div>
+        <div class="ladder-track">
+          <div class="ladder-bar-bg" style="left:calc((1180 - 950) / 700 * 100%); right:0;"></div>
+          <div class="ladder-bar-gain ladder-anim"
+               data-start="1180" data-end="1540"
+               style="left:calc((1180 - 950) / 700 * 100%); width:calc((1540 - 1180) / 700 * 100%);">
+          </div>
+          <div class="ladder-start-dot" style="left:calc((1180 - 950) / 700 * 100%);"></div>
+        </div>
+        <div class="ladder-score-end">1540</div>
+      </div>
+
+      <!-- Michael: 1200→1460, +260 FG -->
+      <div class="ladder-row">
+        <div class="ladder-name">Michael <span class="fg-flag">1G</span></div>
+        <div class="ladder-track">
+          <div class="ladder-bar-bg" style="left:calc((1200 - 950) / 700 * 100%); right:0;"></div>
+          <div class="ladder-bar-gain ladder-anim"
+               data-start="1200" data-end="1460"
+               style="left:calc((1200 - 950) / 700 * 100%); width:calc((1460 - 1200) / 700 * 100%);">
+          </div>
+          <div class="ladder-start-dot" style="left:calc((1200 - 950) / 700 * 100%);"></div>
+        </div>
+        <div class="ladder-score-end">1460</div>
+      </div>
+
+      <!-- Miles: 1230→1550, +320 FG -->
+      <div class="ladder-row">
+        <div class="ladder-name">Miles <span class="fg-flag">1G</span></div>
+        <div class="ladder-track">
+          <div class="ladder-bar-bg" style="left:calc((1230 - 950) / 700 * 100%); right:0;"></div>
+          <div class="ladder-bar-gain ladder-anim"
+               data-start="1230" data-end="1550"
+               style="left:calc((1230 - 950) / 700 * 100%); width:calc((1550 - 1230) / 700 * 100%);">
+          </div>
+          <div class="ladder-start-dot" style="left:calc((1230 - 950) / 700 * 100%);"></div>
+        </div>
+        <div class="ladder-score-end">1550</div>
+      </div>
+
+      <!-- John: 1210→1560, +350 ND FG -->
+      <div class="ladder-row">
+        <div class="ladder-name">John <span class="nd-flag">ND</span></div>
+        <div class="ladder-track">
+          <div class="ladder-bar-bg" style="left:calc((1210 - 950) / 700 * 100%); right:0;"></div>
+          <div class="ladder-bar-gain ladder-anim"
+               data-start="1210" data-end="1560"
+               style="left:calc((1210 - 950) / 700 * 100%); width:calc((1560 - 1210) / 700 * 100%);">
+          </div>
+          <div class="ladder-start-dot" style="left:calc((1210 - 950) / 700 * 100%);"></div>
+        </div>
+        <div class="ladder-score-end">1560</div>
+      </div>
+
+      <!-- Scott: 1220→1530, +310 ND -->
+      <div class="ladder-row">
+        <div class="ladder-name">Scott <span class="nd-flag">ND</span></div>
+        <div class="ladder-track">
+          <div class="ladder-bar-bg" style="left:calc((1220 - 950) / 700 * 100%); right:0;"></div>
+          <div class="ladder-bar-gain ladder-anim"
+               data-start="1220" data-end="1530"
+               style="left:calc((1220 - 950) / 700 * 100%); width:calc((1530 - 1220) / 700 * 100%);">
+          </div>
+          <div class="ladder-start-dot" style="left:calc((1220 - 950) / 700 * 100%);"></div>
+        </div>
+        <div class="ladder-score-end">1530</div>
+      </div>
+
+      <!-- Tanner: 1140→1380, +240 -->
+      <div class="ladder-row">
+        <div class="ladder-name">Tanner</div>
+        <div class="ladder-track">
+          <div class="ladder-bar-bg" style="left:calc((1140 - 950) / 700 * 100%); right:0;"></div>
+          <div class="ladder-bar-gain ladder-anim"
+               data-start="1140" data-end="1380"
+               style="left:calc((1140 - 950) / 700 * 100%); width:calc((1380 - 1140) / 700 * 100%);">
+          </div>
+          <div class="ladder-start-dot" style="left:calc((1140 - 950) / 700 * 100%);"></div>
+        </div>
+        <div class="ladder-score-end">1380</div>
+      </div>
+
+      <!-- Alan: 1440→1550, +110 FG -->
+      <div class="ladder-row">
+        <div class="ladder-name">Alan <span class="fg-flag">1G</span></div>
+        <div class="ladder-track">
+          <div class="ladder-bar-bg" style="left:calc((1440 - 950) / 700 * 100%); right:0;"></div>
+          <div class="ladder-bar-gain ladder-anim"
+               data-start="1440" data-end="1550"
+               style="left:calc((1440 - 950) / 700 * 100%); width:calc((1550 - 1440) / 700 * 100%);">
+          </div>
+          <div class="ladder-start-dot" style="left:calc((1440 - 950) / 700 * 100%);"></div>
+        </div>
+        <div class="ladder-score-end">1550</div>
+      </div>
+
+      <!-- Prince: 1470→1560, +90 FG -->
+      <div class="ladder-row">
+        <div class="ladder-name">Prince <span class="fg-flag">1G</span></div>
+        <div class="ladder-track">
+          <div class="ladder-bar-bg" style="left:calc((1470 - 950) / 700 * 100%); right:0;"></div>
+          <div class="ladder-bar-gain ladder-anim"
+               data-start="1470" data-end="1560"
+               style="left:calc((1470 - 950) / 700 * 100%); width:calc((1560 - 1470) / 700 * 100%);">
+          </div>
+          <div class="ladder-start-dot" style="left:calc((1470 - 950) / 700 * 100%);"></div>
+        </div>
+        <div class="ladder-score-end">1560</div>
+      </div>
+
+      <!-- Legend -->
+      <div style="margin-top: 28px; display:flex; gap:28px; align-items:center; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:8px; font-size:9px; font-weight:700; letter-spacing:1.5px; color:#3a4a2a; text-transform:uppercase;">
+          <div style="width:10px; height:10px; border-radius:50%; background:#3a4a2a;"></div>Start Score
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-size:9px; font-weight:700; letter-spacing:1.5px; color:#6a7a5a; text-transform:uppercase;">
+          <div style="width:24px; height:8px; border-radius:2px; background:rgba(122,184,0,0.4);"></div>Point Gain
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-size:9px; font-weight:700; letter-spacing:1.5px; color:#5a8aaa; text-transform:uppercase;">
+          <span class="nd-flag">ND</span> Neurodiverse / Accommodations
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-size:9px; font-weight:700; letter-spacing:1.5px; color:#9a7a5a; text-transform:uppercase;">
+          <span class="fg-flag">1G</span> First-Generation
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY CARDS -->
+<section class="journey-section">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal">The Full Journey</div>
+    <h2 class="section-headline reveal delay-1">Progress isn't a straight line.<br><em>Here's what it actually looks like.</em></h2>
+
+    <div class="journey-grid">
+
+      <!-- Michael -->
+      <div class="journey-card reveal delay-1">
+        <div class="journey-tag">SAT · Grade 11</div>
+        <div class="journey-name">Michael <span class="fg-flag" style="font-size:7px;">1G</span></div>
+        <div class="journey-sub">Oct '24 → May '25 · 20 session hours</div>
+        <div class="journey-score-row">
+          <span class="j-score-from">1200</span>
+          <span class="j-score-arrow">→</span>
+          <span class="j-score-to">1460</span>
+        </div>
+        <div class="journey-milestones">
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Oct '24 · Start</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1200</span>
+                <span class="milestone-pct">76th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Mar '25 · 12h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1310</span>
+                <span class="milestone-pct">87th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot final"></div>
+            <div>
+              <div class="milestone-date">May '25 · 20h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score" style="color:var(--green)">1460</span>
+                <span class="milestone-pct">96th percentile</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="journey-quote">
+          <span class="qmark">"</span>
+          <p>Once I noticed that I only had to read, like, 20% of the passage, from that point on things just <span class="emph">clicked.</span></p>
+        </div>
+        <div class="journey-cta">View full case →</div>
+      </div>
+
+      <!-- Sachin -->
+      <div class="journey-card reveal delay-2">
+        <div class="journey-tag">SAT · Grade 10</div>
+        <div class="journey-name">Sachin</div>
+        <div class="journey-sub">May '24 → May '25 · 36 session hours</div>
+        <div class="journey-score-row">
+          <span class="j-score-from">1100</span>
+          <span class="j-score-arrow">→</span>
+          <span class="j-score-to">1520</span>
+        </div>
+        <div class="journey-milestones">
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">May '24 · Start</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1100</span>
+                <span class="milestone-pct">66th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Aug '24 · 14h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1250</span>
+                <span class="milestone-pct">82nd percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Apr '25 · 30h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1490</span>
+                <span class="milestone-pct">97th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot final"></div>
+            <div>
+              <div class="milestone-date">May '25 · 36h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score" style="color:var(--green)">1520</span>
+                <span class="milestone-pct">98th percentile</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="journey-quote">
+          <span class="qmark">"</span>
+          <p>It was a long road, but I <span class="emph">trusted</span> the plan from day one. That made all the difference.</p>
+        </div>
+        <div class="journey-cta">View full case →</div>
+      </div>
+
+      <!-- Devon -->
+      <div class="journey-card reveal delay-3">
+        <div class="journey-tag">SAT · Grade 10</div>
+        <div class="journey-name">Devon <span class="nd-flag" style="font-size:7px;">ND</span></div>
+        <div class="journey-sub">Jun '25 → Jun '26 · 26 session hours</div>
+        <div class="journey-score-row">
+          <span class="j-score-from">1070</span>
+          <span class="j-score-arrow">→</span>
+          <span class="j-score-to">1460</span>
+        </div>
+        <div class="journey-milestones">
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Jun '25 · Start</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1070</span>
+                <span class="milestone-pct">59th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Aug '25 · 7h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1190</span>
+                <span class="milestone-pct">75th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Mar '26 · 18h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1340</span>
+                <span class="milestone-pct">89th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot final"></div>
+            <div>
+              <div class="milestone-date">Jun '26 · 26h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score" style="color:var(--green)">1460</span>
+                <span class="milestone-pct">96th percentile</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="journey-quote">
+          <span class="qmark">"</span>
+          <p>I never expected my learning differences to actually become an <span class="emph">advantage.</span></p>
+        </div>
+        <div class="journey-cta">View full case →</div>
+      </div>
+
+      <!-- Tanmay -->
+      <div class="journey-card reveal delay-1">
+        <div class="journey-tag">SAT · Grade 9</div>
+        <div class="journey-name">Tanmay <span class="fg-flag" style="font-size:7px;">1G</span></div>
+        <div class="journey-sub">May '24 → Apr '25 · 38 session hours</div>
+        <div class="journey-score-row">
+          <span class="j-score-from">1130</span>
+          <span class="j-score-arrow">→</span>
+          <span class="j-score-to">1580</span>
+        </div>
+        <div class="journey-milestones">
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">May '24 · Start</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1130</span>
+                <span class="milestone-pct">69th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Aug '24 · 16h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1280</span>
+                <span class="milestone-pct">84th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Mar '25 · 32h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1510</span>
+                <span class="milestone-pct">98th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot final"></div>
+            <div>
+              <div class="milestone-date">Apr '25 · 38h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score" style="color:var(--green)">1580</span>
+                <span class="milestone-pct">99th percentile</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="journey-quote">
+          <span class="qmark">"</span>
+          <p>Once I understood that ERW works a lot like math, everything <span class="emph">changed.</span></p>
+        </div>
+        <div class="journey-cta">View full case →</div>
+      </div>
+
+      <!-- Prince -->
+      <div class="journey-card reveal delay-2">
+        <div class="journey-tag">SAT · Grade 11</div>
+        <div class="journey-name">Prince <span class="fg-flag" style="font-size:7px;">1G</span></div>
+        <div class="journey-sub">Jan '25 → Apr '25 · 9 session hours</div>
+        <div class="journey-score-row">
+          <span class="j-score-from">1470</span>
+          <span class="j-score-arrow">→</span>
+          <span class="j-score-to">1560</span>
+        </div>
+        <div class="journey-milestones">
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Dec '24 · Start</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1470</span>
+                <span class="milestone-pct">97th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Mar '25 · 6h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1520</span>
+                <span class="milestone-pct">98th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot final"></div>
+            <div>
+              <div class="milestone-date">Apr '25 · 9h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score" style="color:var(--green)">1560</span>
+                <span class="milestone-pct">99th percentile</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="journey-quote">
+          <span class="qmark">"</span>
+          <p>What took me over the 1500 hump was the realization to do <span class="emph">less.</span></p>
+        </div>
+        <div class="journey-cta">View full case →</div>
+      </div>
+
+      <!-- Lyn -->
+      <div class="journey-card reveal delay-3">
+        <div class="journey-tag">SAT · Grade 11</div>
+        <div class="journey-name">Lyn</div>
+        <div class="journey-sub">Mar '25 → Aug '25 · 22 session hours</div>
+        <div class="journey-score-row">
+          <span class="j-score-from">1030</span>
+          <span class="j-score-arrow">→</span>
+          <span class="j-score-to">1490</span>
+        </div>
+        <div class="journey-milestones">
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Mar '25 · Start</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1030</span>
+                <span class="milestone-pct">60th percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">May '25 · 8h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1240</span>
+                <span class="milestone-pct">81st percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot"></div>
+            <div>
+              <div class="milestone-date">Jun '25 · 16h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score">1380</span>
+                <span class="milestone-pct">92nd percentile</span>
+              </div>
+            </div>
+          </div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row">
+            <div class="milestone-dot final"></div>
+            <div>
+              <div class="milestone-date">Aug '25 · 22h in</div>
+              <div class="milestone-score-line">
+                <span class="milestone-score" style="color:var(--green)">1490</span>
+                <span class="milestone-pct">97th percentile</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="journey-quote">
+          <span class="qmark">"</span>
+          <p>Around my 11th session, I started seeing through the questions and <span class="emph">rephrasing</span> them into much simpler tasks.</p>
+        </div>
+        <div class="journey-cta">View full case →</div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:24px; text-align:center;">
+      <button onclick="toggleCards()" id="toggle-btn" style="background:none; border:1px solid rgba(122,184,0,0.2); color:#6a7a5a; font-family:'Montserrat',sans-serif; font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:12px 28px; border-radius:3px; cursor:pointer; transition:all 0.2s;">
+        Show All 12 Students ↓
+      </button>
+    </div>
+
+    <!-- Hidden remaining cards: John, Scott, Rae, Miles, Alan, Tanner -->
+    <div id="extra-cards" style="display:none; margin-top:16px;" class="journey-grid">
+
+      <!-- John -->
+      <div class="journey-card">
+        <div class="journey-tag">SAT · Grade 10</div>
+        <div class="journey-name">John <span class="nd-flag" style="font-size:7px;">ND</span></div>
+        <div class="journey-sub">Oct '23 → May '24 · 28 session hours</div>
+        <div class="journey-score-row">
+          <span class="j-score-from">1210</span>
+          <span class="j-score-arrow">→</span>
+          <span class="j-score-to">1560</span>
+        </div>
+        <div class="journey-milestones">
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">Oct '23 · Start</div><div class="milestone-score-line"><span class="milestone-score">1210</span><span class="milestone-pct">77th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">Mar '24 · 22h in</div><div class="milestone-score-line"><span class="milestone-score">1450</span><span class="milestone-pct">96th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot final"></div><div><div class="milestone-date">May '24 · 28h in</div><div class="milestone-score-line"><span class="milestone-score" style="color:var(--green)">1560</span><span class="milestone-pct">99th percentile</span></div></div></div>
+        </div>
+        <div class="journey-quote"><span class="qmark">"</span><p>Working with my accommodations in SAT prep gave me an <span class="emph">unexpected</span> head start when 11th grade hit.</p></div>
+        <div class="journey-cta">View full case →</div>
+      </div>
+
+      <!-- Scott -->
+      <div class="journey-card">
+        <div class="journey-tag">SAT · Grade 11</div>
+        <div class="journey-name">Scott <span class="nd-flag" style="font-size:7px;">ND</span></div>
+        <div class="journey-sub">Feb '24 → Oct '24 · 27 session hours</div>
+        <div class="journey-score-row">
+          <span class="j-score-from">1220</span>
+          <span class="j-score-arrow">→</span>
+          <span class="j-score-to">1530</span>
+        </div>
+        <div class="journey-milestones">
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">Feb '24 · Start</div><div class="milestone-score-line"><span class="milestone-score">1220</span><span class="milestone-pct">78th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">May '24 · 12h in</div><div class="milestone-score-line"><span class="milestone-score">1360</span><span class="milestone-pct">91st percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">Aug '24 · 20h in</div><div class="milestone-score-line"><span class="milestone-score">1480</span><span class="milestone-pct">97th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot final"></div><div><div class="milestone-date">Oct '24 · 27h in</div><div class="milestone-score-line"><span class="milestone-score" style="color:var(--green)">1530</span><span class="milestone-pct">99th percentile</span></div></div></div>
+        </div>
+        <div class="journey-quote"><span class="qmark">"</span><p>With a plan built around my strengths, the test stopped feeling like a <span class="emph">threat.</span></p></div>
+        <div class="journey-cta">View full case →</div>
+      </div>
+
+      <!-- Rae -->
+      <div class="journey-card">
+        <div class="journey-tag">SAT · Grade 10</div>
+        <div class="journey-name">Rae</div>
+        <div class="journey-sub">Apr '24 → May '25 · 48 session hours</div>
+        <div class="journey-score-row">
+          <span class="j-score-from">1180</span>
+          <span class="j-score-arrow">→</span>
+          <span class="j-score-to">1540</span>
+        </div>
+        <div class="journey-milestones">
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">Apr '24 · Start</div><div class="milestone-score-line"><span class="milestone-score">1180</span><span class="milestone-pct">74th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">Aug '24 · 26h in</div><div class="milestone-score-line"><span class="milestone-score">1310</span><span class="milestone-pct">87th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">Mar '25 · 42h in</div><div class="milestone-score-line"><span class="milestone-score">1480</span><span class="milestone-pct">97th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot final"></div><div><div class="milestone-date">May '25 · 48h in</div><div class="milestone-score-line"><span class="milestone-score" style="color:var(--green)">1540</span><span class="milestone-pct">99th percentile</span></div></div></div>
+        </div>
+        <div class="journey-quote"><span class="qmark">"</span><p>Who would've thought SAT prep would <span class="emph">transform</span> the way I see the world?</p></div>
+        <div class="journey-cta">View full case →</div>
+      </div>
+
+      <!-- Miles -->
+      <div class="journey-card">
+        <div class="journey-tag">SAT · Grade 10</div>
+        <div class="journey-name">Miles <span class="fg-flag" style="font-size:7px;">1G</span></div>
+        <div class="journey-sub">Jan '24 → Aug '24 · 36 session hours</div>
+        <div class="journey-score-row">
+          <span class="j-score-from">1230</span>
+          <span class="j-score-arrow">→</span>
+          <span class="j-score-to">1550</span>
+        </div>
+        <div class="journey-milestones">
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">Jan '24 · Start</div><div class="milestone-score-line"><span class="milestone-score">1230</span><span class="milestone-pct">79th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">Mar '24 · 12h in</div><div class="milestone-score-line"><span class="milestone-score">1340</span><span class="milestone-pct">89th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">May '24 · 22h in</div><div class="milestone-score-line"><span class="milestone-score">1470</span><span class="milestone-pct">97th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot final"></div><div><div class="milestone-date">Aug '24 · 36h in</div><div class="milestone-score-line"><span class="milestone-score" style="color:var(--green)">1550</span><span class="milestone-pct">99th percentile</span></div></div></div>
+        </div>
+        <div class="journey-quote"><span class="qmark">"</span><p>Those 8 months completely changed the trajectory of my <span class="emph">life.</span></p></div>
+        <div class="journey-cta">View full case →</div>
+      </div>
+
+      <!-- Alan -->
+      <div class="journey-card">
+        <div class="journey-tag">SAT · Grade 11</div>
+        <div class="journey-name">Alan <span class="fg-flag" style="font-size:7px;">1G</span></div>
+        <div class="journey-sub">Oct '24 → Aug '25 · 12 session hours</div>
+        <div class="journey-score-row">
+          <span class="j-score-from">1440</span>
+          <span class="j-score-arrow">→</span>
+          <span class="j-score-to">1550</span>
+        </div>
+        <div class="journey-milestones">
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">Mar '25 · Start</div><div class="milestone-score-line"><span class="milestone-score">1440</span><span class="milestone-pct">95th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">May '25 · 8h in</div><div class="milestone-score-line"><span class="milestone-score">1470</span><span class="milestone-pct">97th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot final"></div><div><div class="milestone-date">Aug '25 · 12h in</div><div class="milestone-score-line"><span class="milestone-score" style="color:var(--green)">1550</span><span class="milestone-pct">99th percentile</span></div></div></div>
+        </div>
+        <div class="journey-quote"><span class="qmark">"</span><p>The <span class="emph">patterns</span> in SAT grammar are really the exact same as those in SAT math.</p></div>
+        <div class="journey-cta">View full case →</div>
+      </div>
+
+      <!-- Tanner -->
+      <div class="journey-card">
+        <div class="journey-tag">SAT · Grade 10</div>
+        <div class="journey-name">Tanner</div>
+        <div class="journey-sub">Sep '24 → May '25 · 28 session hours</div>
+        <div class="journey-score-row">
+          <span class="j-score-from">1140</span>
+          <span class="j-score-arrow">→</span>
+          <span class="j-score-to">1380</span>
+        </div>
+        <div class="journey-milestones">
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">Sep '24 · Start</div><div class="milestone-score-line"><span class="milestone-score">1140</span><span class="milestone-pct">69th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot"></div><div><div class="milestone-date">Mar '25 · 22h in</div><div class="milestone-score-line"><span class="milestone-score">1290</span><span class="milestone-pct">85th percentile</span></div></div></div>
+          <div class="milestone-connector"></div>
+          <div class="milestone-row"><div class="milestone-dot final" style="background:#5a7a3a;"></div><div><div class="milestone-date">May '25 · 28h in</div><div class="milestone-score-line"><span class="milestone-score" style="color:#5a7a3a;">1380</span><span class="milestone-pct">92nd percentile</span></div></div></div>
+        </div>
+        <div class="journey-quote"><span class="qmark">"</span><p>Ignore all the distraction, and the answer becomes so… <span class="emph">obvious.</span></p></div>
+        <div style="margin-top:12px; font-size:9px; color:#4a5a3a; font-weight:600; letter-spacing:0.5px;">Note: Projection missed by 20 pts.</div>
+        <div class="journey-cta">View full case →</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EFFICIENCY SCATTER -->
+<section class="efficiency-section">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal">The Efficiency Question</div>
+    <h2 class="section-headline reveal delay-1">More hours doesn't mean <em>more gain.</em></h2>
+    <div class="efficiency-layout">
+      <div>
+        <p class="efficiency-prose reveal delay-2">
+          The chart shows total session hours against final SAT point gain, for every student. There is no correlation between spending more time and earning more points.
+          <br><br>
+          <strong>Prince gained 90 points in 9 hours.</strong> Rae gained 360 in 48. Both outcomes were correct, because both started from different positions and had different ceilings to reach.
+          <br><br>
+          The method doesn't sell hours. It sells a ceiling. The path to that ceiling is calibrated to each student, and it ends when there's nothing left to build.
+        </p>
+      </div>
+      <div class="scatter-wrap reveal delay-3">
+        <div class="scatter-title">Session Hours vs. SAT Point Gain — All 12 Students</div>
+        <canvas id="scatterCanvas" height="280"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTION / PROFILE -->
+<section class="projection-section">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal">Projections and Profiles</div>
+    <h2 class="section-headline reveal delay-1">Who this works for.<br><em>Which is most people.</em></h2>
+    <div class="projection-layout">
+      <div class="donut-wrap reveal delay-2">
+        <canvas id="donutCanvas" width="220" height="220"></canvas>
+        <div class="donut-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--green);"></div>11 students met or exceeded their projection target</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#2a3820;"></div>1 student came within 20 points of target (Tanner)</div>
+        </div>
+        <div class="profile-tags">
+          <span class="profile-tag nd">3 Neurodiverse</span>
+          <span class="profile-tag fg">6 First-Generation</span>
+          <span class="profile-tag std">Grades 9 – 11</span>
+          <span class="profile-tag std">Start Range 1030 – 1470</span>
+        </div>
+      </div>
+      <div class="reveal delay-2">
+        <p class="projection-right-prose">
+          Every student receives a projected score at intake, based on diagnostic performance and program length. That number is a commitment.
+          <br><br>
+          <strong>92% of students met or exceeded that number</strong> on official test day. The one student who didn't landed 20 points below projection — still a 240-point improvement from where he started.
+          <br><br>
+          The range of student profiles matters. Three students entered with learning differences and accommodations. Six were first-generation college-goers. Start scores ranged from 1030 to 1470. <strong>The method doesn't require a particular type of student to work.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE RIBBON -->
+<section class="quote-ribbon">
+  <div class="quote-ribbon-track" id="ribbon">
+    <!-- First pass -->
+    <div class="ribbon-quote"><p>Once I noticed that I only had to read, like, 20% of the passage, from that point on things just <span class="emph">clicked.</span></p><div class="ribbon-attr">Michael · Grade 11 · +260 pts</div></div>
+    <div class="ribbon-quote"><p>What took me over the 1500 hump was the realization to do <span class="emph">less.</span></p><div class="ribbon-attr">Prince · Grade 11 · +90 pts</div></div>
+    <div class="ribbon-quote"><p>The <span class="emph">patterns</span> in SAT grammar are really the exact same as those in SAT math.</p><div class="ribbon-attr">Alan · Grade 11 · +110 pts</div></div>
+    <div class="ribbon-quote"><p>Around my 11th session, I started seeing through the questions and <span class="emph">rephrasing</span> them into much simpler tasks.</p><div class="ribbon-attr">Lyn · Grade 11 · +460 pts</div></div>
+    <div class="ribbon-quote"><p>It was a long road, but I <span class="emph">trusted</span> the plan from day one. That made all the difference.</p><div class="ribbon-attr">Sachin · Grade 11 · +420 pts</div></div>
+    <div class="ribbon-quote"><p>Working with my accommodations in SAT prep gave me an <span class="emph">unexpected</span> head start when 11th grade hit.</p><div class="ribbon-attr">John · Grade 10 · +350 pts</div></div>
+    <div class="ribbon-quote"><p>With a plan built around my strengths, the test stopped feeling like a <span class="emph">threat.</span></p><div class="ribbon-attr">Scott · Grade 12 · +310 pts</div></div>
+    <div class="ribbon-quote"><p>Once I understood that ERW works a lot like math, everything <span class="emph">changed.</span></p><div class="ribbon-attr">Tanmay · Grade 10 · +450 pts</div></div>
+    <div class="ribbon-quote"><p>Who would've thought SAT prep would <span class="emph">transform</span> the way I see the world?</p><div class="ribbon-attr">Rae · Grade 11 · +360 pts</div></div>
+    <div class="ribbon-quote"><p>I never expected my learning differences to actually become an <span class="emph">advantage.</span></p><div class="ribbon-attr">Devon · Grade 10 · +390 pts</div></div>
+    <div class="ribbon-quote"><p>Those 8 months completely changed the trajectory of my <span class="emph">life.</span></p><div class="ribbon-attr">Miles · Grade 11 · +320 pts</div></div>
+    <div class="ribbon-quote"><p>Ignore all the distraction, and the answer becomes so… <span class="emph">obvious.</span></p><div class="ribbon-attr">Tanner · Grade 11 · +240 pts</div></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="ribbon-quote"><p>Once I noticed that I only had to read, like, 20% of the passage, from that point on things just <span class="emph">clicked.</span></p><div class="ribbon-attr">Michael · Grade 11 · +260 pts</div></div>
+    <div class="ribbon-quote"><p>What took me over the 1500 hump was the realization to do <span class="emph">less.</span></p><div class="ribbon-attr">Prince · Grade 11 · +90 pts</div></div>
+    <div class="ribbon-quote"><p>The <span class="emph">patterns</span> in SAT grammar are really the exact same as those in SAT math.</p><div class="ribbon-attr">Alan · Grade 11 · +110 pts</div></div>
+    <div class="ribbon-quote"><p>Around my 11th session, I started seeing through the questions and <span class="emph">rephrasing</span> them into much simpler tasks.</p><div class="ribbon-attr">Lyn · Grade 11 · +460 pts</div></div>
+    <div class="ribbon-quote"><p>It was a long road, but I <span class="emph">trusted</span> the plan from day one. That made all the difference.</p><div class="ribbon-attr">Sachin · Grade 11 · +420 pts</div></div>
+    <div class="ribbon-quote"><p>Working with my accommodations in SAT prep gave me an <span class="emph">unexpected</span> head start when 11th grade hit.</p><div class="ribbon-attr">John · Grade 10 · +350 pts</div></div>
+    <div class="ribbon-quote"><p>With a plan built around my strengths, the test stopped feeling like a <span class="emph">threat.</span></p><div class="ribbon-attr">Scott · Grade 12 · +310 pts</div></div>
+    <div class="ribbon-quote"><p>Once I understood that ERW works a lot like math, everything <span class="emph">changed.</span></p><div class="ribbon-attr">Tanmay · Grade 10 · +450 pts</div></div>
+    <div class="ribbon-quote"><p>Who would've thought SAT prep would <span class="emph">transform</span> the way I see the world?</p><div class="ribbon-attr">Rae · Grade 11 · +360 pts</div></div>
+    <div class="ribbon-quote"><p>I never expected my learning differences to actually become an <span class="emph">advantage.</span></p><div class="ribbon-attr">Devon · Grade 10 · +390 pts</div></div>
+    <div class="ribbon-quote"><p>Those 8 months completely changed the trajectory of my <span class="emph">life.</span></p><div class="ribbon-attr">Miles · Grade 11 · +320 pts</div></div>
+    <div class="ribbon-quote"><p>Ignore all the distraction, and the answer becomes so… <span class="emph">obvious.</span></p><div class="ribbon-attr">Tanner · Grade 11 · +240 pts</div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-eyebrow reveal">Next Step</div>
+  <h2 class="cta-headline reveal delay-1">A 30-minute call.<br>No <em>commitment.</em></h2>
+  <p class="cta-body reveal delay-2">
+    The preliminary call isn't a sales pitch. It's a conversation about your child — where they are, where they need to be, and whether Lettuce Learn is the right fit. We'll be direct either way.
+  </p>
+  <button class="cta-btn reveal delay-3">Book a Preliminary Call</button>
+  <div class="cta-note reveal delay-4">Virtual · 30 minutes · No obligation</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <span class="l l1">Lettuce</span>
+    <span class="l sep">·</span>
+    <span class="l l2">Learn</span>
+  </div>
+  <div class="footer-links">
+    <a href="#">SAT / ACT</a>
+    <a href="#">Math Competition</a>
+    <a href="#">Executive Functioning</a>
+    <a href="#">Results</a>
+    <a href="#">About</a>
+  </div>
+  <div class="footer-copy">© 2025 Lettuce Learn</div>
+</footer>
+
+<script>
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+// ── COUNTER ──
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseInt(el.dataset.target);
+    const duration = 1400;
+    const step = target / (duration / 16);
+    let current = 0;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) { current = target; clearInterval(timer); }
+      el.textContent = Math.round(current);
+    }, 16);
+    counterObserver.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+// ── SCORE LADDER ANIMATION ──
+const barObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const bars = e.target.querySelectorAll('.ladder-anim');
+    bars.forEach((bar, i) => {
+      const targetW = bar.style.width;
+      bar.style.width = '0';
+      setTimeout(() => {
+        bar.style.transition = 'width 1s cubic-bezier(0.22, 1, 0.36, 1)';
+        bar.style.width = targetW;
+      }, i * 60 + 100);
+    });
+    barObserver.unobserve(e.target);
+  });
+}, { threshold: 0.2 });
+const ladderWrap = document.querySelector('.score-ladder-wrap');
+if (ladderWrap) barObserver.observe(ladderWrap);
+
+// ── SCATTER PLOT ──
+const students = [
+  { name: 'Michael',  hours: 20, gain: 260, nd: false, fg: true  },
+  { name: 'Prince',   hours:  9, gain:  90, nd: false, fg: true  },
+  { name: 'Alan',     hours: 12, gain: 110, nd: false, fg: true  },
+  { name: 'Lyn',      hours: 22, gain: 460, nd: false, fg: false },
+  { name: 'Sachin',   hours: 36, gain: 420, nd: false, fg: false },
+  { name: 'John',     hours: 28, gain: 350, nd: true,  fg: false },
+  { name: 'Scott',    hours: 27, gain: 310, nd: true,  fg: false },
+  { name: 'Tanmay',   hours: 38, gain: 450, nd: false, fg: true  },
+  { name: 'Rae',      hours: 48, gain: 360, nd: false, fg: false },
+  { name: 'Devon',    hours: 26, gain: 390, nd: true,  fg: false },
+  { name: 'Miles',    hours: 36, gain: 320, nd: false, fg: true  },
+  { name: 'Tanner',   hours: 28, gain: 240, nd: false, fg: false },
+];
+
+function drawScatter() {
+  const canvas = document.getElementById('scatterCanvas');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth - 56;
+  const H = 280;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const pad = { top: 20, right: 20, bottom: 40, left: 48 };
+  const pw = W - pad.left - pad.right;
+  const ph = H - pad.top - pad.bottom;
+
+  // axes
+  ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+  ctx.lineWidth = 1;
+  // y-gridlines
+  [0, 100, 200, 300, 400, 500].forEach(v => {
+    const y = pad.top + ph - (v / 500 * ph);
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + pw, y); ctx.stroke();
+    ctx.fillStyle = '#3a4a2a';
+    ctx.font = '700 8px Montserrat, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(v === 0 ? '' : '+' + v, pad.left - 8, y + 3);
+  });
+  // x-gridlines
+  [0, 10, 20, 30, 40, 50].forEach(v => {
+    const x = pad.left + (v / 50 * pw);
+    ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + ph); ctx.stroke();
+    ctx.fillStyle = '#3a4a2a';
+    ctx.font = '700 8px Montserrat, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(v === 0 ? '' : v + 'h', x, H - pad.bottom + 16);
+  });
+
+  // axis labels
+  ctx.fillStyle = '#3a4a2a';
+  ctx.font = '700 8px Montserrat, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Session Hours', pad.left + pw / 2, H - 4);
+  ctx.save(); ctx.translate(12, pad.top + ph / 2); ctx.rotate(-Math.PI / 2);
+  ctx.textAlign = 'center'; ctx.fillText('SAT Point Gain', 0, 0); ctx.restore();
+
+  // dots
+  students.forEach(s => {
+    const x = pad.left + (s.hours / 50 * pw);
+    const y = pad.top + ph - (s.gain / 500 * ph);
+    // glow
+    const g = ctx.createRadialGradient(x, y, 0, x, y, 14);
+    g.addColorStop(0, 'rgba(122,184,0,0.15)');
+    g.addColorStop(1, 'rgba(122,184,0,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(x, y, 14, 0, Math.PI * 2); ctx.fill();
+    // dot
+    ctx.fillStyle = s.nd ? '#5a8aaa' : (s.fg ? '#aa8a5a' : '#7AB800');
+    ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.fill();
+    // label
+    ctx.fillStyle = '#6a7a5a';
+    ctx.font = '600 9px Montserrat, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(s.name, x + 8, y + 3);
+  });
+}
+
+const scatterObserver = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) { drawScatter(); scatterObserver.disconnect(); }
+}, { threshold: 0.3 });
+const scatterSection = document.querySelector('.efficiency-section');
+if (scatterSection) scatterObserver.observe(scatterSection);
+
+// ── DONUT ──
+function drawDonut() {
+  const canvas = document.getElementById('donutCanvas');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = 220 * dpr;
+  canvas.height = 220 * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const cx = 110, cy = 110, r = 80, inner = 54;
+  // bg
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.fillStyle = '#141a0c'; ctx.fill();
+  // met slice
+  const metAngle = (11 / 12) * Math.PI * 2;
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + metAngle);
+  ctx.closePath();
+  ctx.fillStyle = '#7AB800'; ctx.fill();
+  // missed slice
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.arc(cx, cy, r, -Math.PI / 2 + metAngle, -Math.PI / 2 + Math.PI * 2);
+  ctx.closePath();
+  ctx.fillStyle = '#2a3820'; ctx.fill();
+  // inner circle (donut hole)
+  ctx.beginPath(); ctx.arc(cx, cy, inner, 0, Math.PI * 2);
+  ctx.fillStyle = '#181E0E'; ctx.fill();
+  // center text
+  ctx.fillStyle = '#7AB800';
+  ctx.font = '900 32px Montserrat, sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('92%', cx, cy - 6);
+  ctx.fillStyle = '#4a5a3a';
+  ctx.font = '700 8px Montserrat, sans-serif';
+  ctx.letterSpacing = '1px';
+  ctx.fillText('PROJECTIONS MET', cx, cy + 18);
+}
+
+const donutObserver = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) { drawDonut(); donutObserver.disconnect(); }
+}, { threshold: 0.3 });
+const projSection = document.querySelector('.projection-section');
+if (projSection) donutObserver.observe(projSection);
+
+// ── TOGGLE CARDS ──
+function toggleCards() {
+  const extra = document.getElementById('extra-cards');
+  const btn = document.getElementById('toggle-btn');
+  if (extra.style.display === 'none') {
+    extra.style.display = 'grid';
+    btn.textContent = 'Show Fewer ↑';
+  } else {
+    extra.style.display = 'none';
+    btn.textContent = 'Show All 12 Students ↓';
+  }
+}
+</script>
+</body>
+</html>
