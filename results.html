@@ -149,12 +149,17 @@ footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 44px 56px; displ
     <span class="l l1">Lettuce</span><span class="l sep">&middot;</span><span class="l l2">Learn</span>
   </div>
   <ul class="nav-links">
-    <li><a href="#">SAT / ACT</a></li>
-    <li><a href="#">Math Competition</a></li>
-    <li><a href="#">Exec. Functioning</a></li>
-    <li><a href="#" class="active">Results</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#" class="nav-cta">Book a Call</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-dropdown-toggle">Services</a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="/sat-act.html">SAT &amp; ACT</a></li>
+        <li><a href="/math-comp.html">Math Competition</a></li>
+        <li><a href="/exec-func.html">Executive Functioning</a></li>
+      </ul>
+    </li>
+    <li><a href="/results.html" class="active">Results</a></li>
+    <li><a href="/About.html">About</a></li>
+    <li><a href="/contact.html" class="nav-cta">Book a Call</a></li>
   </ul>
 </nav>
 
@@ -1001,7 +1006,12 @@ function openDeck(id) {
   if (!window.chartsBuilt[id]) { buildChartForStudent(id); window.chartsBuilt[id] = true; }
 }
 
-function closeDeck() {
+window.addEventListener('load', function() {
+    var hash = window.location.hash.replace('#', '');
+    if (hash) { openDeck(hash); }
+  });
+
+  function closeDeck() {
   document.querySelectorAll('.deck-modal.open').forEach(function(m) { m.classList.remove('open'); });
   document.body.style.overflow = '';
 }
