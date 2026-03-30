@@ -255,7 +255,7 @@
     </div>
 
     <div class="form-col">
-      <form action="https://formspree.io/f/xdapgnvd" method="POST" id="contactForm">
+      <form id="contactForm">
 
         <div class="field">
           <label for="parent-name">Your Name</label>
@@ -297,9 +297,41 @@
           <textarea id="note" name="note" placeholder="Current score, target score, timeline, or anything else on your mind."></textarea>
         </div>
 
-        <button type="submit" class="submit-btn">Send My Information →</button>
+        <button type="button" class="submit-btn" onclick="submitForm()">Send My Information →</button>
         <div class="form-note">We respond within 24–48 hours.</div>
       </form>
+
+      <script>
+        function submitForm() {
+          var btn = document.querySelector('.submit-btn');
+          var data = {
+            'parent-name': document.getElementById('parent-name').value,
+            'email':        document.getElementById('email').value,
+            'grade':        document.getElementById('grade').value,
+            'service':      document.getElementById('service').value,
+            'note':         document.getElementById('note').value
+          };
+          if (!data['parent-name'] || !data['email'] || !data['grade'] || !data['service']) {
+            alert('Please fill in all required fields.');
+            return;
+          }
+          btn.textContent = 'Sending...';
+          btn.disabled = true;
+          fetch('https://script.google.com/macros/s/AKfycbzWiKqBlnbwrNWM2kEP2HwrwnpvOAY2N8ZGctfut5ldSzmkuCyafQFMRelzV_LvbYlj0Q/exec', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          }).then(function() {
+            document.getElementById('contactForm').style.display = 'none';
+            document.querySelector('.success-state').classList.add('visible');
+          }).catch(function() {
+            btn.textContent = 'Send My Information →';
+            btn.disabled = false;
+            alert('Something went wrong. Please try again.');
+          });
+        }
+      </script>
 
       <div class="success-state" id="successState">
         <div class="success-eyebrow">Received</div>
