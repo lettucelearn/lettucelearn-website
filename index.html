@@ -138,10 +138,11 @@
 
   /* ── NAV DROPDOWN ── */
   .nav-dropdown { position: relative; }
+.nav-dropdown-toggle::before { content: ''; position: absolute; bottom: -16px; left: -20px; right: -20px; height: 16px; }
   .nav-dropdown-menu {
     visibility: hidden;
     position: absolute;
-    top: calc(100% + 12px);
+    top: calc(100% + 4px);
     left: 50%;
     transform: translateX(-50%) translateY(-6px);
     background: rgba(26,36,16,0.97);
@@ -154,7 +155,8 @@
     z-index: 200;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+transition-delay: 0s;
   }
   .nav-dropdown:hover .nav-dropdown-menu {
     visibility: visible;
