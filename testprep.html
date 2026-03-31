@@ -36,12 +36,12 @@ nav {
   /* ── NAV DROPDOWN ── */
   .nav-dropdown { position: relative; }
   .nav-dropdown-menu {
-    display: none;
+    visibility: hidden;
     position: absolute;
     top: calc(100% + 12px);
     left: 50%;
-    transform: translateX(-50%);
-    background: rgba(20,20,20,0.97);
+    transform: translateX(-50%) translateY(-6px);
+    background: rgba(26,36,16,0.97);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.07);
     border-radius: 8px;
@@ -55,7 +55,7 @@ nav {
     transform: translateX(-50%) translateY(-6px);
   }
   .nav-dropdown:hover .nav-dropdown-menu {
-    display: block;
+    visibility: visible;
     opacity: 1;
     pointer-events: auto;
     transform: translateX(-50%) translateY(0);
