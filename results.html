@@ -19,6 +19,12 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; a
 .nav-links a:hover, .nav-links a.active { color: #E8EDE0; }
 .nav-cta { color: #181E0E !important; background: #7AB800; padding: 10px 20px; border-radius: 3px; transition: opacity 0.2s !important; }
 .nav-cta:hover { opacity: 0.85 !important; }
+.nav-dropdown { position: relative; }
+.nav-dropdown-menu { visibility: hidden; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(-6px); background: rgba(26,36,16,0.97); backdrop-filter: blur(12px); border: 1px solid rgba(122,184,0,0.12); border-radius: 8px; padding: 8px 0; min-width: 200px; list-style: none; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease; }
+.nav-dropdown:hover .nav-dropdown-menu { visibility: visible; opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.nav-dropdown-menu li a { display: block; padding: 10px 20px; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7a8f5a !important; text-decoration: none; transition: color 0.2s, background 0.2s; }
+.nav-dropdown-menu li a:hover { color: #E8EDE0 !important; background: rgba(255,255,255,0.04); }
+.nav-dropdown-toggle::after { content: ' ▾'; font-size: 8px; opacity: 0.5; }
 
 /* PAGE HEADER */
 .page-header { padding: 120px 56px 72px; border-bottom: 1px solid rgba(255,255,255,0.04); max-width: 1400px; margin: 0 auto; }
@@ -164,7 +170,10 @@ footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 44px 56px; displ
 </nav>
 
 <div class="page-header">
-  <div class="page-eyebrow">Case Studies</div>
+  <div class="page-eyebrow" style="display:flex; align-items:center; gap:12px;">
+  <span style="display:block; width:20px; height:1px; background:#7AB800;"></span>
+  Case Studies
+</div>
   <h1 class="page-headline">Behind every <em>score</em> is a student.<br>These are some of them.</h1>
   <p class="page-sub">Every student here completed their Lettuce Learn journey and sat 2&ndash;4 official tests. Starting scores range from 1030 to 1470. Profiles range from neurodiverse to first-generation. The method is the constant.</p>
 </div>
