@@ -1776,13 +1776,13 @@
   var counted = false;
   var statsEl = document.querySelector('.hero-stats');
   if (statsEl) {
-    var observer = new IntersectionObserver(function(entries) {
+    var statsObserver = new IntersectionObserver(function(entries) {
       if (entries[0].isIntersecting && !counted) {
         counted = true;
         document.querySelectorAll('.count').forEach(animateCount);
       }
     }, { threshold: 0.5 });
-    observer.observe(statsEl);
+    statsObserver.observe(statsEl);
   }
 </script>
 
