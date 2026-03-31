@@ -180,19 +180,19 @@ footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 44px 56px; displ
 
 <div class="stat-strip">
   <div class="stat-item">
-    <div class="stat-num">287<em>+</em></div>
+    <div class="stat-num"><span class="count" data-target="287">0</span><em>+</em></div>
     <div class="stat-label">Avg. SAT<br>Point Gain</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">1523</div>
+    <div class="stat-num"><span class="count" data-target="1523">0</span></div>
     <div class="stat-label">Avg. Score<br>Class of 2026</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">27</div>
+    <div class="stat-num"><span class="count" data-target="27">0</span></div>
     <div class="stat-label">Avg. Session Hours<br>to Score Goal</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">92<em>%</em></div>
+    <div class="stat-num"><span class="count" data-target="92">0</span><em>%</em></div>
     <div class="stat-label">Projections<br>Met or Exceeded</div>
   </div>
 </div>
@@ -1142,5 +1142,32 @@ function buildChartForStudent(id) {
 </div>
 <style>@keyframes bannerSlide { to { opacity:1; transform:translateY(0); } }</style>
 
+<script>
+  function animateCount(el) {
+    var target = parseInt(el.getAttribute('data-target'));
+    var duration = 2400;
+    var start = null;
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      var progress = Math.min((timestamp - start) / duration, 1);
+      var ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(ease * target);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+  var counted = false;
+  var statsEl = document.querySelector('.stat-strip');
+  if (statsEl) {
+    var statsObserver = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting && !counted) {
+        counted = true;
+        document.querySelectorAll('.count').forEach(animateCount);
+      }
+    }, { threshold: 0.5 });
+    statsObserver.observe(statsEl);
+  }
+</script>
 </body>
 </html>
