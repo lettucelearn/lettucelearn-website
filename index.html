@@ -1166,6 +1166,130 @@ transition-delay: 0s;
     width: 0%;
     transition: width 0.1s linear;
   }
+
+/* ============================================
+   MOBILE FIX — do not remove
+   ============================================ */
+
+@media (max-width: 768px) {
+
+  /* Prevent horizontal overflow on everything */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* ---- NAV ---- */
+  nav, header {
+    position: relative;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--dark, #1A2410);
+    padding: 20px;
+    gap: 16px;
+    z-index: 1000;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links li {
+    list-style: none;
+  }
+
+  .nav-links a, .nav-cta {
+    font-size: 16px;
+    padding: 10px 0;
+    display: block;
+  }
+
+  /* Hamburger button */
+  .mobile-menu-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+    z-index: 1001;
+  }
+
+  .mobile-menu-btn span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    transition: all 0.3s ease;
+  }
+
+  /* ---- HERO ORBS — clip them on mobile ---- */
+  .hero-orb-1, .hero-orb-2 {
+    width: 200px !important;
+    height: 200px !important;
+    opacity: 0.15;
+  }
+
+  /* ---- LAYOUTS — collapse all columns ---- */
+  .hook-right, .hook-left {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    float: none !important;
+  }
+
+  [style*="display: grid"],
+  [style*="display:grid"] {
+    display: block !important;
+  }
+
+  [style*="display: flex"],
+  [style*="display:flex"] {
+    flex-wrap: wrap !important;
+  }
+
+  /* ---- TYPOGRAPHY — scale down for small screens ---- */
+  h1 { font-size: clamp(2rem, 8vw, 3rem) !important; }
+  h2 { font-size: clamp(1.5rem, 6vw, 2.2rem) !important; }
+  h3 { font-size: clamp(1.1rem, 4vw, 1.5rem) !important; }
+
+  /* ---- GENERAL CONTAINERS ---- */
+  section, .section, .container, .wrapper {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+}
+```
+
+---
+
+**THE HTML ADDITION — one line per page**
+
+In the same file, use `Ctrl+F` to find:
+```
+<ul class="nav-links">
 </style>
 </head>
 <body>
