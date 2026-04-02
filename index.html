@@ -1166,131 +1166,6 @@ transition-delay: 0s;
     width: 0%;
     transition: width 0.1s linear;
   }
-
-/* ============================================
-   MOBILE FIX — do not remove
-   ============================================ */
-
-@media (max-width: 768px) {
-
-  /* Prevent horizontal overflow on everything */
-  html, body {
-    overflow-x: hidden;
-    width: 100%;
-  }
-
-  * {
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  /* ---- NAV ---- */
-  nav, header {
-    position: relative;
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-  }
-
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--dark, #1A2410);
-    padding: 20px;
-    gap: 16px;
-    z-index: 1000;
-  }
-
-  .nav-links.open {
-    display: flex;
-  }
-
-  .nav-links li {
-    list-style: none;
-  }
-
-  .nav-links a, .nav-cta {
-    font-size: 16px;
-    padding: 10px 0;
-    display: block;
-  }
-
-  /* Hamburger button */
-  .mobile-menu-btn {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 4px;
-    z-index: 1001;
-  }
-
-  .mobile-menu-btn span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: #fff;
-    transition: all 0.3s ease;
-  }
-
-  /* ---- HERO ORBS — clip them on mobile ---- */
-  .hero-orb-1, .hero-orb-2 {
-    width: 200px !important;
-    height: 200px !important;
-    opacity: 0.15;
-  }
-
-  /* ---- LAYOUTS — collapse all columns ---- */
-  .hook-right, .hook-left {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    float: none !important;
-  }
-
-  [style*="display: grid"],
-  [style*="display:grid"] {
-    display: block !important;
-  }
-
-  [style*="display: flex"],
-  [style*="display:flex"] {
-    flex-wrap: wrap !important;
-  }
-
-  /* ---- TYPOGRAPHY — scale down for small screens ---- */
-  h1 { font-size: clamp(2rem, 8vw, 3rem) !important; }
-  h2 { font-size: clamp(1.5rem, 6vw, 2.2rem) !important; }
-  h3 { font-size: clamp(1.1rem, 4vw, 1.5rem) !important; }
-
-  /* ---- GENERAL CONTAINERS ---- */
-  section, .section, .container, .wrapper {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-}
-```
-
----
-
-**THE HTML ADDITION — one line per page**
-
-In the same file, use `Ctrl+F` to find:
-```
-<button class="mobile-menu-btn" onclick="this.classList.toggle('open'); document.querySelector('.nav-links').classList.toggle('open');" aria-label="Menu"><span></span><span></span><span></span></button>
-<ul class="nav-links">
 </style>
 </head>
 <body>
@@ -1558,7 +1433,7 @@ In the same file, use `Ctrl+F` to find:
     </div>
 
     <div class="services-grid">
-      <a href="/testprep.html" style="text-decoration:none;"><div class="service-card reveal delay-1">
+      <div class="service-card reveal delay-1">
         <div class="service-accent"></div>
         <span class="service-icon"><svg width="36" height="36" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="32" cy="32" r="28" stroke="#5C6B2E" stroke-width="1.5"/>
@@ -1571,9 +1446,9 @@ In the same file, use `Ctrl+F` to find:
       </svg></span>
         <div class="service-name">SAT & ACT Preparation</div>
         <div class="service-desc">Signal-based prep for students who need to move their score efficiently. Personalized test-taking tactics, logic formulas, and decision-making skills that transfer.</div>
-        <span class="service-detail">Learn more →</span>
-      </div></a>
-      <a href="/math.html" style="text-decoration:none;"><div class="service-card reveal delay-2">
+        <a href="/sat-act.html" class="service-detail">Learn more →</a>
+      </div>
+      <div class="service-card reveal delay-2">
         <div class="service-accent"></div>
         <span class="service-icon"><svg width="36" height="36" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M32 6 L58 54 L6 54 Z" stroke="#5C6B2E" stroke-width="1.5" stroke-linejoin="round"/>
@@ -1585,9 +1460,9 @@ In the same file, use `Ctrl+F` to find:
       </svg></span>
         <div class="service-name">Math Competition Prep</div>
         <div class="service-desc">AMC preparation for students building toward competitive mathematics. Led by certified coaches with elite field experience as both participant and mentor.</div>
-        <span class="service-detail">Learn more →</span>
-      </div></a>
-      <a href="/ef.html" style="text-decoration:none;"><div class="service-card reveal delay-3">
+        <a href="/math-comp.html" class="service-detail">Learn more →</a>
+      </div>
+      <div class="service-card reveal delay-3">
         <div class="service-accent"></div>
         <span class="service-icon"><svg width="36" height="36" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <line x1="8" y1="18" x2="56" y2="18" stroke="#7AB800" stroke-width="2" stroke-linecap="round"/>
@@ -1599,8 +1474,8 @@ In the same file, use `Ctrl+F` to find:
       </svg></span>
         <div class="service-name">Executive Functioning</div>
         <div class="service-desc">For students whose challenge isn't knowledge — it's organization, prioritization, and follow-through. Skills that improve performance across every subject.</div>
-        <span class="service-detail">Learn more →</span>
-      </div></a>
+        <a href="/exec-func.html" class="service-detail">Learn more →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -1647,7 +1522,7 @@ In the same file, use `Ctrl+F` to find:
 
         <div class="reveal delay-2" style="display:flex; align-items:center; gap:16px; margin-bottom:36px;">
           <div style="text-align:center; padding:16px 20px; background:white; border-radius:10px; border:1px solid var(--light);">
-            <div style="font-size:13px; font-weight:900; color:var(--charcoal); line-height:1.2;">8</div>
+            <div style="font-size:20px; font-weight:900; color:var(--charcoal); line-height:1.2;">8</div>
             <div style="font-size:8px; font-weight:700; letter-spacing:2px; color:#bbb; text-transform:uppercase; margin-top:3px;">Weeks</div>
           </div>
           <div style="text-align:center; padding:16px 20px; background:white; border-radius:10px; border:1px solid var(--light);">
@@ -1678,7 +1553,7 @@ In the same file, use `Ctrl+F` to find:
       <div class="reveal-right delay-1" style="display:flex; flex-direction:column; gap:12px;">
 
         <!-- SAT Flagship -->
-        <a href="/summer.html#programs" style="text-decoration:none; display:block;"><div style="
+        <div style="
           background:white; border-radius:14px;
           padding:24px 28px; border:1px solid var(--light);
           border-left:4px solid var(--green);
@@ -1694,10 +1569,10 @@ In the same file, use `Ctrl+F` to find:
             Tue & Thu 9am–1pm · 64 total session hours<br>
             2 hrs ERW + 2 hrs Math per session
           </div>
-        </div></a>
+        </div>
 
         <!-- SAT Mock & Review -->
-        <a href="/summer.html#programs" style="text-decoration:none; display:block;"><div style="
+        <div style="
           background:white; border-radius:14px;
           padding:24px 28px; border:1px solid var(--light);
           border-left:4px solid var(--green);
@@ -1713,10 +1588,10 @@ In the same file, use `Ctrl+F` to find:
             Sat 8am–2pm (bi-weekly)<br>
             Full-length mock test + 2-hr intensive review with Jay Khang
           </div>
-        </div></a>
+        </div>
 
         <!-- AMC 8 & 10 -->
-        <a href="/summer.html#programs" style="text-decoration:none; display:block;"><div style="
+        <div style="
           background:white; border-radius:14px;
           padding:24px 28px; border:1px solid var(--light);
           border-left:4px solid var(--red);
@@ -1732,7 +1607,7 @@ In the same file, use `Ctrl+F` to find:
             AMC 8: Grades 7–8 · Tue & Thu 9–11am<br>
             AMC 10: Grades 9–10 · Tue & Thu 11am–1pm
           </div>
-        </div></a>
+        </div>
 
         <div style="font-size:9px; color:#bbb; font-weight:600; letter-spacing:1px; text-align:right; padding-right:4px;">
           1-on-1 available. Inquire for details.
