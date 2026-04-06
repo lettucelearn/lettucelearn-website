@@ -156,18 +156,110 @@
   .footer-links a { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #3a4a2a; text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--green); }
 
-  @media (max-width: 900px) {
-    nav { padding: 0 24px; }
-    .nav-links { display: none; }
-    .hero { padding: 120px 24px 80px; }
-    .programs, .location, .registration { padding: 80px 24px; }
-    .programs-grid { grid-template-columns: 1fr; }
-    .location-inner { grid-template-columns: 1fr; gap: 40px; }
-    .deck-swiper { width: 320px; }
-    .deck-slides .dcard { width: 320px; }
-    footer { flex-direction: column; gap: 24px; padding: 32px 24px; }
-    .footer-links { flex-wrap: wrap; justify-content: center; }
+  /* =====================================================
+   MOBILE PATCH — added for short-term fix
+   Safe to remove/replace when proper rebuild happens
+   ===================================================== */
+
+/* Hamburger button */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 110;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--olive);
+  border-radius: 2px;
+  transition: all 0.25s ease;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile drawer */
+.nav-mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 105;
+}
+.nav-mobile-drawer {
+  display: none;
+  position: fixed;
+  top: 64px;
+  right: 0;
+  width: 240px;
+  height: calc(100vh - 64px);
+  background: var(--cream);
+  z-index: 106;
+  flex-direction: column;
+  padding: 24px 0;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+}
+.nav-mobile-drawer a {
+  display: block;
+  padding: 14px 28px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--olive);
+  text-decoration: none;
+}
+.nav-mobile-drawer a:last-child {
+  margin-top: 8px;
+  color: var(--dark);
+  background: var(--green);
+  margin-left: 28px;
+  margin-right: 28px;
+  padding: 12px 20px;
+  border-radius: 3px;
+  letter-spacing: 1.5px;
+}
+
+/* Show/hide states (toggled by JS) */
+.nav-mobile-overlay.open { display: block; }
+.nav-mobile-drawer.open { display: flex; }
+
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+
+  .hero { padding: 120px 24px 80px; }
+  .hero-headline { letter-spacing: -1px; }
+  .hero-stats {
+    flex-direction: column;
+    max-width: 100%;
   }
+  .hero-stat { border-right: none; border-bottom: 1px solid rgba(122,184,0,0.15); }
+  .hero-stat:last-child { border-bottom: none; }
+
+  .programs, .location, .registration { padding: 80px 24px; }
+  .programs-grid { grid-template-columns: 1fr; }
+
+  .location-inner { grid-template-columns: 1fr; gap: 40px; }
+
+  .deck-swiper { width: min(320px, 90vw); }
+  .deck-slides .dcard { width: min(320px, 90vw); }
+
+  footer {
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px 24px;
+  }
+  .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+}
 </style>
 </head>
 <body>
@@ -189,7 +281,19 @@
     <li><a href="/About.html">About</a></li>
     <li><a href="/contact.html" class="nav-cta">Book a Call</a></li>
   </ul>
-</nav>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-mobile-overlay" onclick="toggleMobileNav()"></div>
+  <div class="nav-mobile-drawer" id="mobileNav">
+    <a href="/testprep.html">SAT &amp; ACT</a>
+    <a href="/math.html">Math Competition</a>
+    <a href="/ef.html">Executive Functioning</a>
+    <a href="/results.html">Results</a>
+    <a href="/About.html">About</a>
+    <a href="/contact.html">Book a Call</a>
+  </div>
 
 <section class="hero">
   <div class="hero-eyebrow">Summer 2026 · Redmond, WA</div>
@@ -430,6 +534,25 @@
   }
 
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDeck(); });
+ 
+  // MOBILE NAV — patch
+  function toggleMobileNav() {
+    var btn = document.querySelector('.nav-hamburger');
+    var drawer = document.getElementById('mobileNav');
+    var overlay = document.querySelector('.nav-mobile-overlay');
+    var isOpen = drawer.classList.contains('open');
+    if (isOpen) {
+      btn.classList.remove('open');
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    } else {
+      btn.classList.add('open');
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  }
 
   function submitReg() {
     var btn = document.querySelector('.submit-btn');
