@@ -200,11 +200,11 @@
   right: 0;
   width: 240px;
   height: calc(100vh - 64px);
-  background: var(--cream);
+  background: #1A2410;
   z-index: 106;
   flex-direction: column;
   padding: 24px 0;
-  box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+  box-shadow: -4px 0 24px rgba(0,0,0,0.4);
 }
 .nav-mobile-drawer a {
   display: block;
@@ -213,7 +213,7 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--olive);
+  color: #7AB800;
   text-decoration: none;
 }
 .nav-mobile-drawer a:last-child {
@@ -238,11 +238,17 @@
 
   .hero { padding: 120px 24px 80px; }
   .hero-headline { letter-spacing: -1px; }
-  .hero-stats {
+ .hero-stats {
     flex-direction: column;
     max-width: 100%;
+    border-radius: 8px;
+    overflow: visible;
   }
-  .hero-stat { border-right: none; border-bottom: 1px solid rgba(122,184,0,0.15); }
+  .hero-stat {
+    border-right: none;
+    border-bottom: 1px solid rgba(122,184,0,0.15);
+    width: 100%;
+  }
   .hero-stat:last-child { border-bottom: none; }
 
   .programs, .location, .registration { padding: 80px 24px; }
@@ -312,9 +318,10 @@
       <div class="hero-stat-label">SAT &amp; AMC</div>
     </div>
   </div>
-  <div style="margin-top:40px;">
-  <a href="#register" style="display:inline-block; background:#ffffff; color:var(--dark); font-family:'Montserrat',sans-serif; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; padding:14px 24px; border-radius:3px; text-decoration:none; transition:opacity 0.2s; white-space:nowrap;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Register Now →</a>
-  </div>
+  <div style="margin-top:40px; display:flex; flex-direction:column; align-items:flex-start; gap:16px;">
+        <a href="#register" style="display:inline-block; background:#ffffff; color:var(--dark); font-family:'Montserrat',sans-serif; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; padding:14px 24px; border-radius:3px; text-decoration:none; transition:opacity 0.2s; white-space:nowrap;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Register Now →</a>
+        <a href="/results.html" style="font-family:'Montserrat',sans-serif; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#7AB800; text-decoration:none; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">See Student Results →</a>
+      </div>
 </section>
 
 <section class="programs" id="programs">
@@ -474,7 +481,7 @@
       </div>
       <div class="field"><label for="note">Anything we should know? <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><textarea id="note" name="note" placeholder="Current score, target score, timeline, or anything else on your mind."></textarea></div>
       <button type="button" class="submit-btn" onclick="submitReg()">Submit Interest →</button>
-      <div class="form-note">Minimum 4 students per course.</div>
+        <div class="form-note" style="margin-top:10px; text-align:center;">Minimum 4 students per course.</div>
     </form>
     <div class="success-state" id="regSuccess">
       <div class="success-eyebrow">Received</div>
